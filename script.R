@@ -16,8 +16,8 @@ main = function()
   FY=f(Y)
   
   h=0.001
-  E=0.01
-  
+  E=0.001
+  ymin=100000
   
   iter=0
   textpos = 2.4
@@ -25,12 +25,17 @@ main = function()
   ans=0
   while(B-A > 2*E){
     iter=iter+1
+    if(f((A+B)/2) < ymin){
+      xmin = (A+B)/2
+      ymin = f((A+B)/2)
+    }
     plot(x,f(x), type="l", col="red", lwd="2",
          ylim=c(-0.5,2.5), xlim=c(0,2))
     grid()
     
     points(c(A,B), c(f(A),f(B)), lwd="2", pch=19)
-    lines(c(A,A,B,B),c(f(A), -100, f(B), -100),lty="dotted", lwd="3", col="blue")
+    lines(c(A,A),c(f(A), -1000),lty="dotted", lwd="3", col="blue")
+    lines(c(B,B),c(f(B), -1000),lty="dotted", lwd="3", col="blue")
     
     text(0.8,textpos,paste("Iteration number = ", iter), adj = c(0,0))
     text(0.8,textpos-0.2,paste("A = ", A), adj = c(0,0))
@@ -39,6 +44,8 @@ main = function()
     text(0.8,textpos-0.8,paste("Y = ", Y), adj = c(0,0))
     text(1.5,textpos-0.0,paste("FX = ", FX), adj = c(0,0))
     text(1.5,textpos-0.2,paste("FY = ", FY), adj = c(0,0))
+    text(1.5,textpos-0.4,paste("xmin = ", xmin), adj = c(0,0))
+    text(1.5,textpos-0.6,paste("ymin = ", ymin), adj = c(0,0))
   
     
     if(FX>FY){
@@ -59,14 +66,19 @@ main = function()
     
     #Sys.sleep(1)
   }
-  #finter = f(xinter)
+  
   plot(x,f(x), type="l", col="red", lwd="2",
        ylim=c(-0.5,2.5), xlim=c(0,2))
   grid()
-  #points(xinter, y=finter, lwd="3", pch=19)
-  #lines(c(xinter,xinter,xinter, -1000),c(-1000, finter, finter, finter),lty="dotted", lwd="3", col="blue")
+  
   xmin=(A+B)/2
   ymin=f(xmin)
+  
+  
+  points(xmin, ymin, lwd="2", pch=19)
+  lines(c(xmin,xmin),c(ymin, -1000),lty="dotted", lwd="3", col="blue")
+  lines(c(xmin,-1000),c(ymin, ymin),lty="dotted", lwd="3", col="blue")
+  
   text(0.8,textpos,paste("Iteration number = ", iter), adj = c(0,0))
   text(0.8,textpos-0.2,paste("A = ", A), adj = c(0,0))
   text(0.8,textpos-0.4,paste("B = ", B), adj = c(0,0))
@@ -74,8 +86,8 @@ main = function()
   text(0.8,textpos-0.8,paste("Y = ", Y), adj = c(0,0))
   text(1.5,textpos-0.0,paste("FX = ", FX), adj = c(0,0))
   text(1.5,textpos-0.2,paste("FY = ", FY), adj = c(0,0))
-  text(1.5,textpos-0.4,paste("xmin = ", FY), adj = c(0,0))
-  text(1.5,textpos-0.6,paste("ymin = ", FY), adj = c(0,0))
+  text(1.5,textpos-0.4,paste("xmin = ", xmin), adj = c(0,0))
+  text(1.5,textpos-0.6,paste("ymin = ", ymin), adj = c(0,0))
   
 }
 main()
